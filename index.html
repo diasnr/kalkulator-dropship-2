@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kalkulator Dropship</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      background: radial-gradient(circle at top left, rgba(255,182,193,0.55), rgba(135,206,250,0.55), rgba(255,255,255,0.6));
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+    }.glass-card {
+  width: 90%;
+  max-width: 420px;
+  padding: 25px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+  color: #111;
+}
+
+.glass-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-top: 5px;
+  font-size: 15px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background: #007aff;
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  font-size: 15px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="glass-card">
+    <h2>Kalkulator Dropship</h2><label>Harga Supplier (modal)</label>
+<input type="number" id="supplier" placeholder="contoh: 159600" />
+
+<label>Diskon Seller (%)</label>
+<input type="number" id="diskonSeller" placeholder="contoh: 10" />
+
+<label>Fee TikTok per pesanan (%)</label>
+<input type="number" id="feeTiktok" placeholder="contoh: 2" />
+
+<label>Program Gratis Ongkir (%)</label>
+<input type="number" id="gratisOngkir" placeholder="contoh: 3" />
+
+<label>Target Keuntungan (%)</label>
+<input type="number" id="profit" placeholder="contoh: 20" />
+
+<button onclick="hitung()">Hitung Harga</button>
+
+<div class="result" id="hasil"></div>
+
+  </div>  <script>
+    function hitung() {
+      const supplier = parseFloat(document.getElementById('supplier').value) || 0;
+      const diskonSeller = parseFloat(document.getElementById('diskonSeller').value) || 0;
+      const feeTiktok = parseFloat(document.getElementById('feeTiktok').value) || 0;
+      const gratisOngkir = parseFloat(document.getElementById('gratisOngkir').value) || 0;
+      const profit = parseFloat(document.getElementById('profit').value) || 0;
+
+      const hargaDiskon = supplier - (supplier * diskonSeller / 100);
+      const totalFee = feeTiktok + gratisOngkir;
+      const hargaJual = hargaDiskon / (1 - (totalFee/100) - (profit/100));
+
+      document.getElementById('hasil').innerHTML = `
+        <p><strong>Harga Supplier:</strong> Rp ${supplier.toLocaleString()}</p>
+        <p><strong>Harga Setelah Diskon Seller:</strong> Rp ${hargaDiskon.toLocaleString()}</p>
+        <p><strong>Total Fee:</strong> ${totalFee}%</p>
+        <p><strong>Harga Jual Ideal:</strong> <span style="font-size:18px;color:#007aff;">Rp ${Math.ceil(hargaJual).toLocaleString()}</span></p>
+      `;
+    }
+  </script></body>
+</html>
